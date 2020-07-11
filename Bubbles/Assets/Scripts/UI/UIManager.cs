@@ -19,7 +19,89 @@ public class UIManager : MonoBehaviour
 		AppManager.appManager.currUIManager = null;
 	}
 
-	public void OpenPanel(GameObject panel)
+    // The UI is seperated into 3 primary categories for the purposes of the app. 
+    // This GameObject array contains the 3 main UI panels that holds the functionality
+    // of going through the app, step by step.
+    [SerializeField]
+    GameObject[] primaryUIPanelsArray;
+
+    [SerializeField]
+    GameObject[] appStartPaneslArray;
+
+    private void Start()
+    {
+        // When the app first starts up, the client initially needs to login or signup
+        // before the app knows what to do for them next. This for loop ensures that the
+        // 'Project Home' and '3D Editor' is diabled and the 'App Start and Login' page
+        // is what the client sees.
+        for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
+        {
+            if (primaryUIPanelsArray[pUI].name != "AppStartAndLogin_Panels")
+            {
+                primaryUIPanelsArray[pUI].SetActive(false);
+            }
+
+            if (primaryUIPanelsArray[pUI].name == "AppStartAndLogin_Panels")
+            {
+                for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+                {
+                    primaryUIPanelsArray[pUI].SetActive(true);
+                    appStartPaneslArray[aSP].SetActive(false);
+                }
+            }
+        }
+    }
+
+    public void OpenPrimaryAppPanels(string panelName)
+    {
+        for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
+        {
+            if (primaryUIPanelsArray[pUI].name != panelName)
+            {
+                primaryUIPanelsArray[pUI].SetActive(false);
+            }
+
+            if (primaryUIPanelsArray[pUI].name == panelName)
+            {
+                primaryUIPanelsArray[pUI].SetActive(true);
+            }
+        }
+    }
+
+    public void ClosePrimaryAppPanels(string panelName)
+    {
+        for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
+        {
+            if (primaryUIPanelsArray[pUI].name == panelName)
+            {
+                primaryUIPanelsArray[pUI].SetActive(false);
+            }
+        }
+    }
+
+    public void OpenAppStartPanel(string panelName)
+    {
+        for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+        {
+            if (appStartPaneslArray[aSP].name == panelName)
+            {
+                appStartPaneslArray[aSP].SetActive(true);
+            }
+        }
+    }
+
+    public void CloseAppStartPanel(string panelName)
+    {
+        for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+        {
+            if (appStartPaneslArray[aSP].name == panelName)
+            {
+                appStartPaneslArray[aSP].SetActive(false);
+            }
+        }
+    }
+
+    /*public void OpenPanel(GameObject panel)
 	{
 		if (panel.activeSelf)
 		{
@@ -29,7 +111,7 @@ public class UIManager : MonoBehaviour
 		{
 			panel.SetActive(true);
 		}
-	}
+	}*/
 
     // CP???Why are these needed in the UIManager? Can they be placed in their own script that handles creating anything realated 
     // CP???to new user data types and checked here if needed to fulfill UI related actions happening on the canvas.
