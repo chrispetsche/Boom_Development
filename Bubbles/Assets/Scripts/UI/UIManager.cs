@@ -79,9 +79,36 @@ public class UIManager : MonoBehaviour
     }
 
     //!!! Temporary Editor Opener !!!//
-    public void OpenEditor()
+    public void OpenEditor(string projectType)
     {
         ShufflePrimaryPanelActivations(primaryUIPanelsArray[1], primaryUIPanelsArray[2]);
+
+        switch (projectType)
+        {
+            case "New Build":
+                {
+                    // Open blue colorwash panel
+                    // Set loadbar coloring to be blue
+
+                    break;
+                }
+
+            case "Remodel":
+                {
+                    // Open blue colorwash panel
+                    // Set loadbar coloring to be blue
+
+                    break;
+                }
+
+            case "Decorate":
+                {
+                    // Open blue colorwash panel
+                    // Set loadbar coloring to be blue
+
+                    break;
+                }
+        }
     }
 
     void ShufflePrimaryPanelActivations(GameObject currPanel, GameObject newPanel)
@@ -232,6 +259,11 @@ public class UIManager : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public void ReturnToProjectsHome(GameObject currScenePanel)
+    {
+        ShufflePrimaryPanelActivations(currScenePanel, primaryUIPanelsArray[1]);
     }
 
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class NewProjectsPanelSequence : MonoBehaviour
 {
     int inputPanelCount;
+    string typeOfProject;
     string styleSelection;
 
     [SerializeField]
@@ -16,8 +17,13 @@ public class NewProjectsPanelSequence : MonoBehaviour
     [SerializeField]
     GameObject ramImg; //!!! This will be changed later to fit the actual needs of the system !!!//
 
-    public void StartOrReset_NewProjectPanel()
+    [SerializeField]
+    GameObject addOrEditProjectPanel;
+
+    public void StartOrReset_NewProjectPanel(string projectType)
     {
+        typeOfProject = projectType;
+        addOrEditProjectPanel.SetActive(false);
         SelectANewStyle();
     }
 
@@ -25,6 +31,9 @@ public class NewProjectsPanelSequence : MonoBehaviour
     {
         inputPanelCount = 0;
         SelectOrResetStyle("");
+
+        AddToOrEditExistingProject addOrEditPanel = addOrEditProjectPanel.GetComponent<AddToOrEditExistingProject>();
+        addOrEditPanel.UnhideNewProjectTitleElements();
 
         newProjectInformationInputPanelArray[0].SetActive(true);
         newProjectInformationInputPanelArray[1].SetActive(false);
@@ -99,7 +108,7 @@ public class NewProjectsPanelSequence : MonoBehaviour
                 {
                     //!!! Send all information to server and request feedback for next steps, including the dollhouse extrusion. !!!//
                     //!!! Open approiate color wash and run dollhouse loadbar
-                    uiManager.OpenEditor();
+                    uiManager.OpenEditor(typeOfProject);
 
                     break;
                 }
