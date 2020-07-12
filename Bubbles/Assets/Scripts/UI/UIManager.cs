@@ -24,9 +24,22 @@ public class UIManager : MonoBehaviour
     // of going through the app, step by step.
     [SerializeField]
     GameObject[] primaryUIPanelsArray;
+    string currPrimaryAppPanel;
 
     [SerializeField]
-    GameObject[] appStartPaneslArray;
+    GameObject[] appStart_SubPanelsArray;
+
+    [SerializeField]
+    GameObject[] projectPages_SubPanelsArray;
+    [SerializeField]
+    GameObject[] projectBackgroundColorWashPanelsArray;
+    [SerializeField]
+    GameObject[] projectSetupPanelsArray;
+    [SerializeField]
+    GameObject[] projectDemo_IntroPanelsArray;
+
+    [SerializeField]
+    GameObject[] editor_SubPanelsArray;
 
     private void Start()
     {
@@ -43,16 +56,175 @@ public class UIManager : MonoBehaviour
 
             if (primaryUIPanelsArray[pUI].name == "AppStartAndLogin_Panels")
             {
-                for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+                for (int aSP = 0; aSP < appStart_SubPanelsArray.Length; aSP++)
                 {
                     primaryUIPanelsArray[pUI].SetActive(true);
-                    appStartPaneslArray[aSP].SetActive(false);
+                    currPrimaryAppPanel = primaryUIPanelsArray[pUI].name;
+
+                    appStart_SubPanelsArray[aSP].SetActive(false);
                 }
             }
         }
     }
 
-    public void OpenPrimaryAppPanels(string panelName)
+    public void LoginToApp()
+    {
+        ShufflePrimaryPanelActivations(primaryUIPanelsArray[0], primaryUIPanelsArray[1]);
+    }
+
+
+    public void LogoutOFApp(GameObject currPanel)
+    {
+        ShufflePrimaryPanelActivations(currPanel, primaryUIPanelsArray[0]);
+    }
+
+    void ShufflePrimaryPanelActivations(GameObject currPanel, GameObject newPanel)
+    {
+        for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
+        {
+            // If shuffling from App Start Panels to Project Page Panels...
+            if (currPanel == primaryUIPanelsArray[0] && newPanel == primaryUIPanelsArray[1])
+            {
+                // Close all App Start Sub Panels
+                for (int aSSP = 0; aSSP < appStart_SubPanelsArray.Length; aSSP++)
+                {
+                    appStart_SubPanelsArray[aSSP].SetActive(false);
+                }
+
+                // Make sure the Project Page that's active is the home page
+                projectPages_SubPanelsArray[0].SetActive(true);
+                projectPages_SubPanelsArray[1].SetActive(false);
+
+                //!!! If this is the first time use of the app, open FTUX panels !!!//
+                //projectPages_SubPanelsArray[2].SetActive(true);
+            }
+
+            // If shuffling from Project Page Panels to 3D Editor Panels...
+            else if (currPanel == primaryUIPanelsArray[1] && newPanel == primaryUIPanelsArray[2])
+            {
+                // Close all Project Page Sub Panels
+                for (int pPSP = 0; pPSP < projectPages_SubPanelsArray.Length; pPSP++)
+                {
+                    projectPages_SubPanelsArray[pPSP].SetActive(false);
+                }
+            }
+
+            // If shuffling from Project Page Panels to App Start Panels...
+            else if (currPanel == primaryUIPanelsArray[1] && newPanel == primaryUIPanelsArray[0])
+            {
+                // Close all Project Page Sub Panels
+                for (int pPSP = 0; pPSP < projectPages_SubPanelsArray.Length; pPSP++)
+                {
+                    projectPages_SubPanelsArray[pPSP].SetActive(false);
+                }
+            }
+
+            // If shuffling from 3D Editor Panels to Project Page Panels...
+            else if (currPanel == primaryUIPanelsArray[2] && newPanel == primaryUIPanelsArray[1])
+            {
+                // Close 3D Editor Sub Panels
+                for (int eSP = 0; eSP < editor_SubPanelsArray.Length; eSP++)
+                {
+                    editor_SubPanelsArray[eSP].SetActive(false);
+                }
+            }
+
+            // If shuffling from 3D Editor Panels to App Start Panels...
+            else if (currPanel == primaryUIPanelsArray[2] && newPanel == primaryUIPanelsArray[0])
+            {
+                // Close 3D Editor Sub Panels
+                for (int eSP = 0; eSP < editor_SubPanelsArray.Length; eSP++)
+                {
+                    editor_SubPanelsArray[eSP].SetActive(false);
+                }
+            }
+        }
+
+        newPanel.SetActive(true);
+        currPanel.SetActive(false);
+    }
+
+    public void StartNewProject(string projectType)
+    {
+        projectPages_SubPanelsArray[2].SetActive(true);
+
+        switch (projectType)
+        {
+            case "New Build":
+                {
+
+                    // Call to active New Build main panel
+                    projectBackgroundColorWashPanelsArray[0].SetActive(true);
+                    // Call to active New Build Demo Intro panel
+                    projectSetupPanelsArray[0].SetActive(true);
+
+                    break;
+                }
+
+            case "Remodel":
+                {
+                    // Call to active Remodel main panel
+                    projectBackgroundColorWashPanelsArray[1].SetActive(true);
+                    // Call to active Remodel Demo Intro panel
+                    projectSetupPanelsArray[1].SetActive(true);
+
+                    break;
+                }
+
+            case "Decorate":
+                {
+                    // Call to active Decorate main panel
+                    projectBackgroundColorWashPanelsArray[2].SetActive(true);
+                    // Call to active Decorate Demo Intro panel
+                    projectSetupPanelsArray[2].SetActive(true);
+
+                    break;
+                }
+        }
+    }
+
+    public void OpenDemoProject(string demoType)
+    {
+        projectPages_SubPanelsArray[2].SetActive(true);
+
+        switch (demoType)
+        {
+            case "New Build":
+                {
+
+                    // Call to active New Build main panel
+                    projectBackgroundColorWashPanelsArray[0].SetActive(true);
+                    // Call to active New Build Demo Intro panel
+                    projectDemo_IntroPanelsArray[0].SetActive(true);
+                    
+                    break;
+                }
+
+            case "Remodel":
+                {
+                    // Call to active Remodel main panel
+                    projectBackgroundColorWashPanelsArray[1].SetActive(true);
+                    // Call to active Remodel Demo Intro panel
+                    projectDemo_IntroPanelsArray[1].SetActive(true);
+
+                    break;
+                }
+
+            case "Decorate":
+                {
+                    // Call to active Decorate main panel
+                    projectBackgroundColorWashPanelsArray[2].SetActive(true);
+                    // Call to active Decorate Demo Intro panel
+                    projectDemo_IntroPanelsArray[2].SetActive(true);
+
+                    break;
+                }
+        }
+    }
+
+
+    /*
+    public void OpenAndClosePrimaryAppPanels(bool open, string panelName)
     {
         for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
         {
@@ -81,37 +253,33 @@ public class UIManager : MonoBehaviour
 
     public void OpenAppStartPanel(string panelName)
     {
-        for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+        for (int aSP = 0; aSP < appStart_SubPanelsArray.Length; aSP++)
         {
-            if (appStartPaneslArray[aSP].name == panelName)
+            if (appStart_SubPanelsArray[aSP].name == panelName)
             {
-                appStartPaneslArray[aSP].SetActive(true);
+                appStart_SubPanelsArray[aSP].SetActive(true);
             }
         }
     }
 
     public void CloseAppStartPanel(string panelName)
     {
-        for (int aSP = 0; aSP < appStartPaneslArray.Length; aSP++)
+        for (int aSP = 0; aSP < appStart_SubPanelsArray.Length; aSP++)
         {
-            if (appStartPaneslArray[aSP].name == panelName)
+            if (appStart_SubPanelsArray[aSP].name == panelName)
             {
-                appStartPaneslArray[aSP].SetActive(false);
+                appStart_SubPanelsArray[aSP].SetActive(false);
             }
         }
-    }
+    }*/
 
-    /*public void OpenPanel(GameObject panel)
-	{
-		if (panel.activeSelf)
-		{
-			panel.SetActive(false);
-		}
-		else
-		{
-			panel.SetActive(true);
-		}
-	}*/
+
+
+
+
+
+
+
 
     // CP???Why are these needed in the UIManager? Can they be placed in their own script that handles creating anything realated 
     // CP???to new user data types and checked here if needed to fulfill UI related actions happening on the canvas.
