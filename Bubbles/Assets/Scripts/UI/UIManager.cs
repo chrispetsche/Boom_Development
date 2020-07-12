@@ -78,6 +78,12 @@ public class UIManager : MonoBehaviour
         ShufflePrimaryPanelActivations(currPanel, primaryUIPanelsArray[0]);
     }
 
+    //!!! Temporary Editor Opener !!!//
+    public void OpenEditor()
+    {
+        ShufflePrimaryPanelActivations(primaryUIPanelsArray[1], primaryUIPanelsArray[2]);
+    }
+
     void ShufflePrimaryPanelActivations(GameObject currPanel, GameObject newPanel)
     {
         for (int pUI = 0; pUI < primaryUIPanelsArray.Length; pUI++)
@@ -158,6 +164,8 @@ public class UIManager : MonoBehaviour
                     // Call to active New Build Demo Intro panel
                     projectSetupPanelsArray[0].SetActive(true);
 
+                    projectDemo_IntroPanelsArray[0].SetActive(false);
+
                     break;
                 }
 
@@ -168,6 +176,8 @@ public class UIManager : MonoBehaviour
                     // Call to active Remodel Demo Intro panel
                     projectSetupPanelsArray[1].SetActive(true);
 
+                    projectDemo_IntroPanelsArray[1].SetActive(false);
+
                     break;
                 }
 
@@ -177,6 +187,8 @@ public class UIManager : MonoBehaviour
                     projectBackgroundColorWashPanelsArray[2].SetActive(true);
                     // Call to active Decorate Demo Intro panel
                     projectSetupPanelsArray[2].SetActive(true);
+
+                    projectDemo_IntroPanelsArray[2].SetActive(false);
 
                     break;
                 }
